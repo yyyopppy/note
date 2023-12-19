@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>{{ announcement.title }}</h1>
+  <p>{{ announcement.content }}</p>
+  <p>作成者: {{ announcement.author }}</p>
+  <p>作成日時: {{ announcement.created_at }}</p>
+  <h2>コメント</h2>
+  <ul>
+    {% for comment in announcement.comment_set.all %}
+      <li>
+        <p>{{ comment.author }} ({{ comment.created_at }})</p>
+        <p>{{ comment.content }}</p>
+      </li>
+    {% empty %}
+      <li>コメントはありません。</li>
+    {% endfor %}
+  </ul>
+  <a href="{% url 'add_comment' announcement.pk %}">コメントを追加</a>
+  <a href="{% url 'announcement_list' %}">一覧に戻る</a>
+{% endblock %}

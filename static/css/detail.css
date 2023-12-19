@@ -1,0 +1,8 @@
+.btn-pink {
+    background-color: pink; /* または希望するピンク色の具体的なコード */
+    color: white; /* テキストの色 */
+}
+
+.btn-pink:hover {
+    background-color: darkpink; /* ホバー時の色 */
+}

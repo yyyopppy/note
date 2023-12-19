@@ -1,0 +1,10 @@
+<h2>重要なお知らせ</h2>
+<ul>
+{% for announcement in announcements %}
+  <li>
+    <strong>{{ announcement.formatted_date }}</strong>: {{ announcement.title }}
+  </li>
+{% empty %}
+  <li>現在、お知らせはありません。</li>
+{% endfor %}
+</ul>

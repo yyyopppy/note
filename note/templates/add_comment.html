@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Comment{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>コメント追加</h2>
+    <form method="post" action="{% url 'note:add_comment' object.pk %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">コメントする</button>
+    </form>
+</div>
+{% endblock %}

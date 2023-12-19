@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block title %}Note Detail{% endblock %}
+
+{% block contents %}
+  <div class="container">
+    <div class="row">
+      <div class="col offset-3">
+        <h5>{{ object.title }}</h5>
+        <p>{{ object.comment }}</p>
+        <p>{{ object.posted_at }}に投稿</p>
+
+        {% if object.image1 or object.image2 %}
+          <p><img src="{{ object.image1.url }}"></p>
+          {% if object.image2 %}
+            <p><img src="{{ object.image2.url }}"></p>
+          {% endif %}
+        {% endif %}
+
+        {% for comment in post.comments.all %}
+          <p>{{ comment.user.username }}: {{ comment.text }}</p>
+        {% endfor %}
+
+        <form action="{% url 'note:add_comment' object.pk %}" method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="button" class="btn btn-outline-primary">コメントする</button>
+        </form>
+
+        <div class="comments">
+          <h6>コメント一覧</h6>
+          {% for comment in comments %}
+            <div class="comment">
+              <p>投稿者: {{ comment.user.username }}</p>
+              <p>{{ comment.text }}</p>
+              <p>投稿日時: {{ comment.created_at }}</p>
+            </div>
+          {% empty %}
+            <p>コメントはありません。</p>
+          {% endfor %}
+        </div>
+
+        {% if user.is_authenticated %}
+          <form action="{% url 'note:notepost_like' object.id %}" method="POST">
+            {% csrf_token %}
+            {% if post_is_liked %}
+              <button type="submit" name="notepost_id" value="{{object.id}}" class="btn btn-danger"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+              </svg></button>
+            {% else %}
+              <button type="submit" name="notepost_id" value="{{object.id}}" class="btn btn-outline-danger">見た</button>
+            {% endif %}
+          </form>
+        {% else %}
+        {% endif %}
+
+
+      <strong class="text-secondary">
+          {% if number_of_likes == 0 %}
+              0 OK
+          {% elif number_of_likes == 1 %}
+              1 OK
+          {% else %}
+              {{ number_of_likes }} OK
+          {% endif %}
+      </strong>
+      
+        
+        {% for user in liked_users %}
+            {{ user.username }}
+        {% endfor %}
+
+      <br>
+        
+    {% if request.user == object.user %}
+          <a href="{% url 'note:edit' object.pk %}" class="btn btn-primary my-2">編集</a>
+          <a href="{% url 'note:note_delete' object.pk %}" class="btn btn-primary my-2">削除</a>
+    {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Share Note{% endblock %}
+
+    {% block contents %}
+    {% include "notes_title.html" %}
+    {% include "notes_list.html" %}
+
+    {% if user.is_authenticated %}    
+        {% include "pagination.html" %}
+    {% else %}
+    {% endif %}
+
+    {% endblock %}

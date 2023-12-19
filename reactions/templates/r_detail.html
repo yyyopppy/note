@@ -1,0 +1,22 @@
+{# reactions/templates/reactions/note_detail.html #}
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>{{ note.title }}</h1>
+  <p>{{ note.content }}</p>
+
+  <!-- リアクション表示 -->
+  <h2>Reactions</h2>
+  {% for reaction in reactions %}
+    <p>{{ reaction.user.username }} reacted with {{ reaction.get_reaction_type_display }}</p>
+  {% endfor %}
+
+  <!-- リアクション追加フォーム -->
+  <h2>Add Reaction</h2>
+  <form method="post" action="{% url 'add_reaction' note_id=note.id %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add Reaction</button>
+  </form>
+{% endblock %}

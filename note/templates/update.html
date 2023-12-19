@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Note Update{% endblock %}
+
+
+{% block contents %}
+  <br>
+  <div class="container">
+    <div class="row">
+      <div class="col offset-3">
+        <form action="" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class="btn btn-primary my-2">更新する</button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

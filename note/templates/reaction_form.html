@@ -1,0 +1,14 @@
+<!-- templates/note/reaction_form.html -->
+{% comment %} 
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Create Reaction</h1>
+  <form method="post" action="{% url 'note:create_reaction' record.pk %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    
+    <button type="submit">Add Reaction</button>
+  </form>
+  <a href="{% url 'note:detail' pk=record.pk %}">Back to Note Detail</a>
+{% endblock %} {% endcomment %}

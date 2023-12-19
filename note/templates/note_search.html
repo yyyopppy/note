@@ -1,0 +1,26 @@
+<!-- article_search.html -->
+{% extends 'base.html' %}
+
+{% block contents %}
+  <h6>検索結果</h6>
+  {% comment %} <form method="get" action="{% url 'note:note_search' %}" class="search-form">
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">検索</button>
+  </form> {% endcomment %}
+
+  
+    {% if note_list %}
+    <div class="note-list">
+      {% for note in note_list %}
+        <div class="note-card">
+          <h3><a href="{% url 'note:detail' note.pk %}">{{ note.title }}</a></h3>
+          <p>{{ note.summary }}</p> 
+          <span class="note-date">{{ note.posted_at }}</span>
+        </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p>検索条件に一致する記事は見つかりませんでした。</p>
+    {% endif %}
+
+{% endblock %}

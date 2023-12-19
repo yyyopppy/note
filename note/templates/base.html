@@ -1,0 +1,128 @@
+
+{% load static %}
+<!doctype html>
+<html lang="ja">
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.112.5">
+    <title>{% block title %}{% endblock %}</title>
+
+    <link rel="icon" type="image/x-icon"
+          href={% static 'assets/favicon.ico' %} />
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    
+  </head>
+  <body>
+<header>
+  <div class="collapse bg-light" id="navbarHeader">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 col-md-7 py-4">
+          <p class="text-muted">機能
+            <br>・記事に対するリアクション機能→確認漏れ防止
+            <br>・カテゴリ、投稿者ごとに記事の絞り込みができる
+          <br>・検索機能で探したい記事を見つけやすく</p>
+        </div>
+        <div class="col-sm-8 col-md-7 py-4">
+          <h6>MY MENU
+          </h6>
+          <ul class="list-unstyled">
+            {% if user.is_authenticated %} 
+            <li><a href="{% url 'note:mypage' %}"
+              class="text-gray">マイページ</a></li>
+            <li><a href="{% url 'note:index' %}"
+              class="text-gray">トップページ</a></li>
+            <li><a href="{% url 'accounts:logout' %}"
+              class="text-gray">ログアウト</a></li>
+              
+            {% else %}
+            <li><a href="{% url 'accounts:login' %}"
+              class="text-gray">ログイン</a></li>
+
+            {% endif %}    
+            
+            <!-- base.html の一部 -->
+            <form method="get" action="{% url 'note:note_search' %}">
+            <input type="text" name="query" placeholder="記事を検索">
+            <button type="button" class="btn btn-outline-primary"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search-heart" viewBox="0 0 16 16">
+              <path d="M6.5 4.482c1.664-1.673 5.825 1.254 0 5.018-5.825-3.764-1.664-6.69 0-5.018Z"/>
+              <path d="M13 6.5a6.471 6.471 0 0 1-1.258 3.844c.04.03.078.062.115.098l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1.007 1.007 0 0 1-.1-.115h.002A6.5 6.5 0 1 1 13 6.5ZM6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11Z"/>
+            </svg></button></form>
+
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="navbar navbar-light bg-light shadow-sm">
+    <div class="container">
+      <a href="{% url 'note:index' %}" class="navbar-brand d-flex align-items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        <strong>Share Note</strong>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+   <!-- 重要なお知らせのセクションを追加 -->
+   <section class="announcements">
+    <div class="container py-4">
+      <h2 class="h6 ">重要なお知らせ</h6>
+      <ul class="list-unstyled">
+        {% for announcement in announcements %}
+          <li>
+            <strong>{{ announcement.published_date }}</strong>: {{ announcement.title }}
+          </li>
+        {% empty %}
+          <li>現在、お知らせはありません。</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </section>
+
+
+{% block contents %}{% endblock %}
+</main>
+
+{% if user.is_authenticated %} 
+<footer class="text-muted py-5">
+  <div class="container">
+    <p class="float-end mb-1">
+      <a href="{% url 'note:index'%}">Back to top</a>
+    </p>
+    <p class="mb-1">Share Note is &copy; ***</p>
+  </div>     
+</footer>
+{% else %}
+{% endif %}   
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    </body>
+</html>

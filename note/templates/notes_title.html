@@ -1,0 +1,42 @@
+<!-- タイトルとナビゲーションボタン -->
+  <section class="py-5 text-center container">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <!-- タイトルと本文 -->
+        {% if user.is_authenticated %}
+        <h5 class="fw-light"></h5>
+        <p class="lead text-muted"></p>
+        {% else %}
+        {% endif %}
+        <p>
+          <!-- ナビゲーションボタン -->
+          {% if user.is_authenticated %}
+         {{user.username}}さんがログイン中です
+          <br>
+          <a href="{% url 'note:post'%}" class="btn btn-primary my-2">投稿</a>
+          <a href="{% url 'accounts:logout'%}" class="btn btn-secondary my-2">ログアウト</a>
+
+          {% else %}
+          <a href="{% url 'accounts:login'%}" class="btn btn-primary my-2">ログイン</a>
+          {% endif %}
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+  {% comment %} <section class="py-5 text-center container">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="fw-light">Note一覧</h1>
+        <p class="lead text-muted">検索機能もぜひご活用ください</p>
+        <p>
+          <a href="#" class="btn btn-primary my-2">Noteを作る</a>
+          <a href="{% url 'accounts:logout' %}" class="btn btn-secondary my-2">ログアウト</a>
+        </p>
+      </div>
+    </div>
+  </section>  {% endcomment %}

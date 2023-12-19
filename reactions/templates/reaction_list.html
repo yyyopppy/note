@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Reactions</h1>
+  {% for reaction in reactions %}
+    <p>{{ reaction.user.username }} reacted with {{ reaction.get_reaction_type_display }}</p>
+    {% endfor %}
+    {% endblock %}

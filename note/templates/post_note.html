@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Post{% endblock %}
+{% block contents %}
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col offset-2">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <hr>
+                <button type="submit" class="btn btn-outline-primary">投稿</button> <!-- 送信ボタン -->
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
